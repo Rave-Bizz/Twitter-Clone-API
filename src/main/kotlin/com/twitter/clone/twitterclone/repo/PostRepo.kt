@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PostRepo: JpaRepository<Post, Long> {
     fun findByUsername(username: String): List<Post>
-//    fun findByPostId(postId: Long): Post
 }

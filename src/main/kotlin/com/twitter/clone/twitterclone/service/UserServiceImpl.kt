@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 
 @Service
 @Transactional
@@ -34,7 +35,9 @@ class UserServiceImpl(
     override fun saveUser(user: User): User {
         log.info("Saving new user to the database ${user.name}")
         val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password))
-        return userRepo.save(userWithEncodedPassword)
+        val userInDB = userRepo.save(userWithEncodedPassword)
+        addRoleToUser(userInDB.username, "ROLE_USER")
+        return userInDB
     }
 
     override fun saveRole(role: Role): Role {
@@ -66,12 +69,19 @@ class UserServiceImpl(
         return postWithId
     }
 
-    override fun addCommentToPost(comment: Comment) {
+    override fun addCommentToPost(comment: Comment): Comment {
         log.info("Saving new comment to the database $comment")
         if (comment.postId == null) throw NoSuchElementException("Missing postId")
         val savedComment = commentRepo.save(comment)
         val post = postRepo.findById(comment.postId).get()
         post.comments.add(savedComment)
+        return savedComment
+    }
+
+    override fun getCommentsForPost(findByPostId: Long): List<Comment> {
+        val comments = commentRepo.findByPostId(findByPostId)
+        log.info("Saving new comment to the database ${comments[0]}")
+        return comments
     }
 
     @Throws(UsernameNotFoundException::class)

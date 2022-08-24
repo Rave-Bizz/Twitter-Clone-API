@@ -45,14 +45,14 @@ class CustomAuthenticationFilter(
         val access_token =
             JWT.create()
                 .withSubject(user.username)
-                .withExpiresAt(Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(Date(System.currentTimeMillis() + 600 * 60 * 1000))
                 .withIssuer(request?.requestURL.toString())
                 .withClaim("roles", user.authorities.stream().map(GrantedAuthority::getAuthority).toList())
                 .sign(algo)
         val refresh_token =
             JWT.create()
                 .withSubject(user.username)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60 * 60 * 100))
+                .withExpiresAt(Date(System.currentTimeMillis() + 6000 * 60 * 100))
                 .withIssuer(request?.requestURL.toString())
                 .withClaim("roles", user.authorities.stream().map(GrantedAuthority::getAuthority).toList())
                 .sign(algo)

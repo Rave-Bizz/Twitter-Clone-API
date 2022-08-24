@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.twitter.clone.twitterclone.domain.model.Comment
 import com.twitter.clone.twitterclone.domain.model.Post
 import com.twitter.clone.twitterclone.domain.model.Role
 import com.twitter.clone.twitterclone.domain.model.User
@@ -51,10 +52,29 @@ class UserController(
         return userService.getAllPosts()
     }
 
-    @GetMapping("/users/save")
+    @GetMapping("/posts/{postId}/comments")
+    @ResponseStatus(HttpStatus.OK)
+    fun getCommentForPost(@PathVariable postId: Long): List<Comment> {
+//        log.info("attempting query for comments on post $postId")
+        return userService.getCommentsForPost(postId)
+    }
+
+    @PostMapping("/users/save")
     @ResponseStatus(HttpStatus.CREATED)
     fun saveUser(@RequestBody user: User): User {
         return userService.saveUser(user)
+    }
+
+    @PostMapping("/post")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun savePost(@RequestBody post: Post): Post {
+        return userService.savePost(post)
+    }
+
+    @PostMapping("/post/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveComment(@RequestBody comment: Comment): Comment {
+        return userService.addCommentToPost(comment)
     }
 
     @GetMapping("/role/save")
