@@ -15,7 +15,7 @@ data class User(
     val name: String = "",
     val username: String = "",
     val password: String = "",
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     val posts: MutableList<Post> = mutableListOf(),
     @ManyToMany(fetch = FetchType.EAGER)
     val roles: MutableList<Role> = mutableListOf(),
