@@ -14,7 +14,7 @@
 	<name>twitterclone</name>
 	<description>twitter backend clone</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>1.8</java.version>
 		<kotlin.version>1.7.10</kotlin.version>
 	</properties>
 	<dependencies>
