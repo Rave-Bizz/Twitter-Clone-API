@@ -107,7 +107,7 @@ class UserController(
                         .withSubject(user.username)
                         .withExpiresAt(Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.requestURL.toString())
-                        .withClaim("roles", user.roles.stream().map(Role::name).toList())
+                        .withClaim("roles", user.roles.toString())
                         .sign(algo)
                 log.info("access token is: $access_token")
                 val tokens: HashMap<String, String> = hashMapOf()
