@@ -13,10 +13,8 @@ data class User(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,
     val name: String = "",
+    val avatar: String = "",
     val username: String = "",
     val password: String = "",
-    @OneToMany(fetch = FetchType.LAZY)
-    val posts: MutableList<Post> = mutableListOf(),
-    @ManyToMany(fetch = FetchType.EAGER)
-    val roles: MutableList<Role> = mutableListOf(),
+    val roles: Role? = null,
 )

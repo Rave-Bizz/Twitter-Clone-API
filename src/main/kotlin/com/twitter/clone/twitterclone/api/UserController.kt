@@ -77,18 +77,6 @@ class UserController(
         return userService.addCommentToPost(comment)
     }
 
-    @GetMapping("/role/save")
-    fun saveRole(@RequestBody role: Role): ResponseEntity<Role> {
-        val uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString())
-        return ResponseEntity.created(uri).body(userService.saveRole(role))
-    }
-
-    @GetMapping("/role/addtouser")
-    @ResponseStatus(HttpStatus.OK)
-    fun saveRole(@RequestBody form: RoleToUserForm) {
-        userService.addRoleToUser(form.username, form.roleName)
-    }
-
     @GetMapping("/refresh/token")
     fun refreshToken(request: HttpServletRequest, response: HttpServletResponse) {
         log.info("request is: $request")
@@ -128,8 +116,3 @@ class UserController(
         }
     }
 }
-
-data class RoleToUserForm(
-    val username: String,
-    val roleName: String
-)

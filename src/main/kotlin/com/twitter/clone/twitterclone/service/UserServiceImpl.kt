@@ -34,22 +34,8 @@ class UserServiceImpl(
 
     override fun saveUser(user: User): User {
         log.info("Saving new user to the database ${user.name}")
-        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password))
-        val userInDB = userRepo.save(userWithEncodedPassword)
-        addRoleToUser(userInDB.username, "ROLE_USER")
-        return userInDB
-    }
-
-    override fun saveRole(role: Role): Role {
-        log.info("Saving new role to the database $role")
-        return roleRepo.save(role)
-    }
-
-    override fun addRoleToUser(username: String, roleName: String) {
-        log.info("Adding role $roleName to user $username")
-        val user = userRepo.findByUsername(username)
-        val role = roleRepo.findByName(roleName)
-        user?.roles?.add(role)
+        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password), roles = Role(null, "ROLE_USER"))
+        return userRepo.save(userWithEncodedPassword)
     }
 
     override fun getAllPostForUser(username: String): List<Post> {
@@ -63,10 +49,7 @@ class UserServiceImpl(
 
     override fun savePost(post: Post): Post {
         log.info("Saving new post to the database $post")
-        val user = userRepo.findByUsername(post.username)
-        val postWithId = postRepo.save(post)
-        user?.posts?.add(postWithId)
-        return postWithId
+        return postRepo.save(post)
     }
 
     override fun addCommentToPost(comment: Comment): Comment {
@@ -102,7 +85,8 @@ class UserServiceImpl(
             userRepo.findByUsername(username) ?: throw UsernameNotFoundException("User not found in the database")
         log.info("User was found in the database")
         val authorities: MutableList<SimpleGrantedAuthority> = mutableListOf()
-        user.roles.forEach { role -> authorities.add(SimpleGrantedAuthority(role.name)) }
+        val role = user.roles
+        authorities.add(SimpleGrantedAuthority(role?.name))
         return org.springframework.security.core.userdetails.User(user.username, user.password, authorities)
     }
 
