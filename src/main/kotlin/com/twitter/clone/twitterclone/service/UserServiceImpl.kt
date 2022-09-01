@@ -34,7 +34,8 @@ class UserServiceImpl(
 
     override fun saveUser(user: User): User {
         log.info("Saving new user to the database ${user.name}")
-        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password), roles = "ROLE_USER")
+        val avatar = "https://robohash.org/" + user.name + ".png"
+        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password), roles = "ROLE_USER", avatar = avatar)
         return userRepo.save(userWithEncodedPassword)
     }
 
