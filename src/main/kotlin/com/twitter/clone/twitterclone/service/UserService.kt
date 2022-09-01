@@ -12,6 +12,8 @@ interface UserService {
     fun savePost(post: Post): Post
     fun addCommentToPost(comment: Comment): Comment
     fun updatePost(post: Post): Post
+    fun deletePost(post: Post)
+    fun deleteComment(comment: Comment)
     fun updateComment(comment: Comment): Comment
     fun getCommentsForPost(findByPostId: Long): List<Comment>
     fun getUser(username: String): User

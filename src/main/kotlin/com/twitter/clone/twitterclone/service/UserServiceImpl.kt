@@ -69,6 +69,20 @@ class UserServiceImpl(
         return postRepo.save(postFromDb.copy(content = post.content, updatedAt = System.currentTimeMillis().toString()))
     }
 
+    override fun deletePost(post: Post) {
+        if(post.id == null) throw IllegalArgumentException()
+        postRepo.delete(post)
+    }
+
+    override fun deleteComment(comment: Comment) {
+        if(comment.id == null && comment.postId == null) throw IllegalArgumentException()
+        log.info("deleting comment from database ${comment.id}")
+//        val post = postRepo.findById(comment.postId!!).get()
+//        post.comments.remove(comment)
+//        postRepo.save(post)
+        commentRepo.delete(comment)
+    }
+
     override fun updateComment(comment: Comment): Comment {
         if(comment.id == null) throw IllegalArgumentException()
         val commentFromDb = commentRepo.findById(comment.id).get()

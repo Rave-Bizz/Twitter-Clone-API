@@ -15,7 +15,7 @@ data class Post(
     val content: String = "",
     val createdAt: String = "",
     val updatedAt: String = "",
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     val comments: MutableList<Comment> = mutableListOf(),
     val username: String = "",
 )

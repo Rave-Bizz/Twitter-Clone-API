@@ -40,6 +40,10 @@ class UserController(
 ) {
     val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleAlreadyExist(e: IllegalArgumentException): ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+
     @GetMapping("/users")
     fun getUsers(): ResponseEntity<List<User>> {
         return ResponseEntity.ok().body(userService.getUsers())
@@ -82,6 +86,18 @@ class UserController(
     fun updateComment(@RequestBody comment: Comment): Comment {
         return userService.updateComment(comment = comment)
     }
+
+    @DeleteMapping("/post")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deletePost(@RequestBody post: Post) {
+        userService.deletePost(post = post)
+    }
+
+//    @DeleteMapping("/post/comment")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    fun deleteComment(@RequestBody comment: Comment) {
+//        userService.deleteComment(comment = comment)
+//    }
 
     @PostMapping("/post/comment")
     @ResponseStatus(HttpStatus.CREATED)
