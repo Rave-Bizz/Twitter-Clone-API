@@ -25,18 +25,16 @@ class TwittercloneApplication() {
     @Bean
     fun run(userService: UserService): CommandLineRunner {
         return CommandLineRunner { args ->
-            userService.saveRole(Role(null, "ROLE_USER"))
             userService.saveUser(
                 User(
                     null,
                     "John Travolta",
                     "John",
+                    "John",
                     "1234",
-                    mutableListOf(),
                 )
             )
-            userService.addRoleToUser("john", "ROLE_USER")
-            val post = Post(null, "New Post", System.currentTimeMillis().toString(), mutableListOf(),"John")
+            val post = Post(null, "New Post", System.currentTimeMillis().toString(), System.currentTimeMillis().toString(), mutableListOf(),"John")
             val postWithId = userService.savePost(post)
             val comment = Comment(null, "Awesome stuff big guy", System.currentTimeMillis().toString(), postId = postWithId.id, "John")
             userService.addCommentToPost(comment)

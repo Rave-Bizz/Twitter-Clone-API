@@ -11,6 +11,7 @@ interface UserService {
     fun getAllPosts(): List<Post>
     fun savePost(post: Post): Post
     fun addCommentToPost(comment: Comment): Comment
+    fun updatePost(post: Post): Post
     fun getCommentsForPost(findByPostId: Long): List<Comment>
     fun getUser(username: String): User
     // want to make this paginated eventually

@@ -34,7 +34,7 @@ class UserServiceImpl(
 
     override fun saveUser(user: User): User {
         log.info("Saving new user to the database ${user.name}")
-        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password), roles = Role(null, "ROLE_USER"))
+        val userWithEncodedPassword = user.copy(password = passwordEncoder.encode(user.password), roles = "ROLE_USER")
         return userRepo.save(userWithEncodedPassword)
     }
 
@@ -49,7 +49,8 @@ class UserServiceImpl(
 
     override fun savePost(post: Post): Post {
         log.info("Saving new post to the database $post")
-        return postRepo.save(post)
+        val postWithTime = post.copy(createdAt = System.currentTimeMillis().toString(), updatedAt = System.currentTimeMillis().toString())
+        return postRepo.save(postWithTime)
     }
 
     override fun addCommentToPost(comment: Comment): Comment {
@@ -59,6 +60,13 @@ class UserServiceImpl(
         val post = postRepo.findById(comment.postId).get()
         post.comments.add(savedComment)
         return savedComment
+    }
+
+    override fun updatePost(post: Post): Post {
+        if(post.id == null) throw IllegalArgumentException()
+        val postFromDb = postRepo.findById(post.id).get()
+        log.info("Updating post to the database ${post.id}")
+        return postRepo.save(postFromDb.copy(content = post.content, updatedAt = System.currentTimeMillis().toString()))
     }
 
     override fun getCommentsForPost(findByPostId: Long): List<Comment> {
@@ -86,8 +94,7 @@ class UserServiceImpl(
         log.info("User was found in the database")
         val authorities: MutableList<SimpleGrantedAuthority> = mutableListOf()
         val role = user.roles
-        authorities.add(SimpleGrantedAuthority(role?.name))
+        authorities.add(SimpleGrantedAuthority(role))
         return org.springframework.security.core.userdetails.User(user.username, user.password, authorities)
     }
-
 }
