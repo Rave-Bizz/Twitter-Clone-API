@@ -69,6 +69,13 @@ class UserServiceImpl(
         return postRepo.save(postFromDb.copy(content = post.content, updatedAt = System.currentTimeMillis().toString()))
     }
 
+    override fun updateComment(comment: Comment): Comment {
+        if(comment.id == null) throw IllegalArgumentException()
+        val commentFromDb = commentRepo.findById(comment.id).get()
+        log.info("Updating comment to the database ${comment.id}")
+        return commentRepo.save(commentFromDb.copy(content = comment.content, updatedAt = System.currentTimeMillis().toString()))
+    }
+
     override fun getCommentsForPost(findByPostId: Long): List<Comment> {
         val comments = commentRepo.findByPostId(findByPostId)
         log.info("Saving new comment to the database ${comments[0]}")

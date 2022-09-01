@@ -74,8 +74,13 @@ class UserController(
     @PatchMapping("/post")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updatePost(@RequestBody post: Post): Post {
-
         return userService.updatePost(post = post)
+    }
+
+    @PatchMapping("/post/comment")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun updateComment(@RequestBody comment: Comment): Comment {
+        return userService.updateComment(comment = comment)
     }
 
     @PostMapping("/post/comment")

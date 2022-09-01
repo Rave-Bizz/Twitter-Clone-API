@@ -36,7 +36,7 @@ class TwittercloneApplication() {
             )
             val post = Post(null, "New Post", System.currentTimeMillis().toString(), System.currentTimeMillis().toString(), mutableListOf(),"John")
             val postWithId = userService.savePost(post)
-            val comment = Comment(null, "Awesome stuff big guy", System.currentTimeMillis().toString(), postId = postWithId.id, "John")
+            val comment = Comment(null, "Awesome stuff big guy", System.currentTimeMillis().toString(), System.currentTimeMillis().toString(), postId = postWithId.id, "John")
             userService.addCommentToPost(comment)
         }
     }
