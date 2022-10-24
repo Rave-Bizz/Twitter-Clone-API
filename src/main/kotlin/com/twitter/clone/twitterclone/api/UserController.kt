@@ -6,11 +6,8 @@ import com.auth0.jwt.interfaces.DecodedJWT
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.twitter.clone.twitterclone.domain.model.Comment
 import com.twitter.clone.twitterclone.domain.model.Post
-import com.twitter.clone.twitterclone.domain.model.Role
 import com.twitter.clone.twitterclone.domain.model.User
-import com.twitter.clone.twitterclone.filter.CustomAuthorizationFilter
 import com.twitter.clone.twitterclone.service.UserService
-import jakarta.servlet.http.HttpServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import lombok.RequiredArgsConstructor
@@ -20,15 +17,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.RuntimeException
-import java.net.URI
-import java.text.Normalizer.Form
 import java.util.*
 import kotlin.collections.HashMap
 

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="`User`")
 data class User(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,

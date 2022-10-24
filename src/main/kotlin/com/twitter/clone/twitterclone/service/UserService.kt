@@ -2,7 +2,6 @@ package com.twitter.clone.twitterclone.service
 
 import com.twitter.clone.twitterclone.domain.model.Comment
 import com.twitter.clone.twitterclone.domain.model.Post
-import com.twitter.clone.twitterclone.domain.model.Role
 import com.twitter.clone.twitterclone.domain.model.User
 
 interface UserService {

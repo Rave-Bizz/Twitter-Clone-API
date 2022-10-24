@@ -2,11 +2,9 @@ package com.twitter.clone.twitterclone.service
 
 import com.twitter.clone.twitterclone.domain.model.Comment
 import com.twitter.clone.twitterclone.domain.model.Post
-import com.twitter.clone.twitterclone.domain.model.Role
 import com.twitter.clone.twitterclone.domain.model.User
 import com.twitter.clone.twitterclone.repo.CommentRepo
 import com.twitter.clone.twitterclone.repo.PostRepo
-import com.twitter.clone.twitterclone.repo.RoleRepo
 import com.twitter.clone.twitterclone.repo.UserRepo
 import jakarta.transaction.Transactional
 import lombok.extern.slf4j.Slf4j
@@ -25,7 +23,6 @@ import java.lang.IllegalArgumentException
 @Slf4j
 class UserServiceImpl(
     private val userRepo: UserRepo,
-    private val roleRepo: RoleRepo,
     private val postRepo: PostRepo,
     private val commentRepo: CommentRepo,
     private val passwordEncoder: PasswordEncoder

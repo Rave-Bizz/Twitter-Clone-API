@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="post")
 data class Post(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,
@@ -16,6 +17,7 @@ data class Post(
     val createdAt: String = "",
     val updatedAt: String = "",
     @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "postId", referencedColumnName = "id")
     val comments: MutableList<Comment> = mutableListOf(),
     val username: String = "",
 )
